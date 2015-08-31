@@ -2,6 +2,7 @@
   "id": "http://www.gandhi.io/schema/cycle",
   "$schema": "http://json-schema.org/draft-04/schema",
   "required": [
+    "id",
     "title"
   ],
   "type":"object",
@@ -20,17 +21,17 @@
     "options": {
       "type": "object",
       "default": {
-        "open": null,
-        "close": null
+        "open": true,
+        "close": false
       },
       "properties": {
         "open": {
-          "type": ["null", "number"],
-          "default": null
+          "type": ["boolean", "number"],
+          "default": true
         },
         "close": {
-          "type": ["null", "number"],
-          "default": null
+          "type": ["boolean", "number"],
+          "default": false
         }
       }
     },
@@ -198,33 +199,51 @@
         "project:delete",
         "project/assignments:read",
         "project/assignments:write",
+        "project/invitations:read",
+        "project/invitations:write",
         "project/contents:read",
         "project/contents:write"
       ],
       "properties": {
         "project:read": {
-          "$ref": "#/definitions/permission"
+          "$ref": "#/definitions/permission",
+          "default": {}
         },
         "project:create": {
-          "$ref": "#/definitions/permission"
+          "$ref": "#/definitions/permission",
+          "default": {}
         },
         "project:update": {
-          "$ref": "#/definitions/permission"
+          "$ref": "#/definitions/permission",
+          "default": {}
         },
         "project:delete": {
-          "$ref": "#/definitions/permission"
+          "$ref": "#/definitions/permission",
+          "default": {}
         },
         "project/assignments:read": {
-          "$ref": "#/definitions/permission"
+          "$ref": "#/definitions/permission",
+          "default": {}
         },
         "project/assignments:write": {
-          "$ref": "#/definitions/permission"
+          "$ref": "#/definitions/permission",
+          "default": {}
         },
         "project/contents:read": {
-          "$ref": "#/definitions/permission"
+          "$ref": "#/definitions/permission",
+          "default": {}
         },
         "project/contents:write": {
-          "$ref": "#/definitions/permission"
+          "$ref": "#/definitions/permission",
+          "default": {}
+        },
+        "project/invitations:read": {
+          "$ref": "#/definitions/permission",
+          "default": {}
+        },
+        "project/invitations:write": {
+          "$ref": "#/definitions/permission",
+          "default": {}
         }
       },
       "default": {
@@ -250,6 +269,12 @@
           "applicant": true
         },
         "project/contents:write": {
+          "applicant": true
+        },
+        "project/invitations:read": {
+          "applicant": true
+        },
+        "project/invitations:write": {
           "applicant": true
         }
       }
@@ -380,10 +405,12 @@
           "type": "string"
         },
         "visible": {
-          "$ref": "#/definitions/permission"
+          "$ref": "#/definitions/permission",
+          "default": {}
         },
         "assignable": {
-          "$ref": "#/definitions/permission"
+          "$ref": "#/definitions/permission",
+          "default": {}
         }
       }
     },
@@ -404,7 +431,8 @@
           "default": ""
         },
         "visible": {
-          "$ref": "#/definitions/permission"
+          "$ref": "#/definitions/permission",
+          "default": {}
         },
         "component": {
           "type": "object",
@@ -457,7 +485,8 @@
           }
         },
         "order": {
-          "type": "number"
+          "type": "number",
+          "default": 0
         }
       }
     },
