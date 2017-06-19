@@ -78,11 +78,40 @@
 
 	<!-- Form -->
 	<div class="panel-body" ng-if="tab == 'Form' &amp;&amp; !stageFormEdit">
-		<div class="alert alert-warning" ng-if="!stage.component.options.form" style="margin-bottom: 0;">Please specify a form definition for this stage.</div>
-		<div ng-if="stage.component.options.form" sf-schema="stage.component.options.schema" sf-form="copy.component.options.form" sf-options="sfOptions" ng-model="sample"></div>
-		<div class="btn btn-sm btn-default" ng-if="stage.component.options.form" ng-click="validate()">Validate</div>
+		<!-- alternate forms -->
+		<div ng-if="stage.component.options.defaultFormId">
+			<div class="alert alert-warning" ng-if="!stage.component.options.forms[stage.component.options.defaultFormId]" style="margin-bottom: 0;">Please specify a form definition for this stage.</div>
+			<div ng-if="stage.component.options.forms[stage.component.options.defaultFormId]" sf-schema="stage.component.options.schema" sf-form="copy.component.options.forms[stage.component.options.defaultFormId]" sf-options="sfOptions" ng-model="sample"></div>
+			<div class="btn btn-sm btn-default" ng-if="stage.component.options.forms[stage.component.options.defaultFormId]" ng-click="validate()">Validate</div>
+		</div>
+
+		<!-- single form (legacy) -->
+		<div ng-if="!stage.component.options.defaultFormId">
+			<div class="alert alert-warning" ng-if="!stage.component.options.form" style="margin-bottom: 0;">Please specify a form definition for this stage.</div>
+			<div ng-if="stage.component.options.form" sf-schema="stage.component.options.schema" sf-form="copy.component.options.form" sf-options="sfOptions" ng-model="sample"></div>
+			<div class="btn btn-sm btn-default" ng-if="stage.component.options.form" ng-click="validate()">Validate</div>
+		</div>
 	</div>
 	<div class="panel-body" ng-if="tab == 'Form' &amp;&amp; stageFormEdit">
-		<div style="height: 400px;" ui-ace="{mode: 'json'}" json ng-model="stageFormEdit.component.options.form"></div>
+		<label>
+			Default Form:
+			<select ng-model="stageFormEdit.component.options.defaultFormId" ng-options="formId as formId for (formId, form) in stageFormEdit.component.options.forms"></select>
+		</label>
+		<p class="help-block">The selected form will be used for new content, while existing content will continue to use its creator form for display and edits.</p>
+
+		<div ng-repeat="(formId, form) in stageFormEdit.component.options.forms">
+			<div ng-if="form">
+				<button class="btn btn-xs btn-danger ng-scope pull-right" ng-if="stageFormEdit" ng-click="removeForm(formId)">Remove Form</button>
+				<h5>#{{formId}}</h5>
+				<div style="height: 400px;" ui-ace="{mode: 'json'}" json ng-model="stageFormEdit.component.options.forms[formId]"></div>
+				<hr />
+			</div>
+		</div>
+		<form class="form-inline">
+			<div class="form-group">
+				<input type="text" class="form-control" placeholder="New Form ID" ng-model="ui.newFormId">
+			</div>
+			<button type="submit" class="btn btn-default" ng-class="{disabled: !ui.newFormId}" ng-click="addForm()">Add Form</button>
+		</form>
 	</div>
 </div>
