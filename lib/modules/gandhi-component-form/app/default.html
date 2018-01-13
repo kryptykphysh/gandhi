@@ -36,21 +36,21 @@
 				<div class="panel-body">
 					<form name="gandhiFormComponent" ng-submit="complete(gandhiFormComponent)">
 						<div
-							ng-if="stage.component.options.schema &amp;&amp; (
+							ng-if="stage.component.options.schema &amp;&amp; (stage.component.options.forms && (
 content.data.formId
 	? stage.component.options.forms[content.data.formId]
 	: (stage.component.options.defaultFormId
 		? stage.component.options.forms[stage.component.options.defaultFormId]
-		: (stage.component.options.forms && stage.component.options.forms['original']) || stage.component.options.form))" 
+		: (stage.component.options.forms && stage.component.options.forms['original'])) || stage.component.options.form))" 
 
 							sf-model="content.data.form"
 							
-							sf-form="(
+							sf-form="(stage.component.options.forms && (
 content.data.formId
 	? stage.component.options.forms[content.data.formId]
 	: (stage.component.options.defaultFormId
 		? stage.component.options.forms[stage.component.options.defaultFormId]
-		: (stage.component.options.forms && stage.component.options.forms['original']) || stage.component.options.form))"
+		: (stage.component.options.forms && stage.component.options.forms['original'])) || stage.component.options.form))"
 							
 							sf-schema="stage.component.options.schema"
 							
