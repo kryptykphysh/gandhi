@@ -17,7 +17,7 @@
   },
   "scripts": {
     "postinstall": "bower install",
-    "start": "node server.js",
+    "start": "node --harmony server.js",
     "test": "mocha test/tests/*.js test/tests/**/*.js test/tests/**/**/*.js --reporter spec"
   },
   "dependencies": {
